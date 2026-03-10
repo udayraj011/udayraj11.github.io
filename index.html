@@ -1,141 +1,283 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html>
 <head>
-    <title>Batman11 Shoes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-        }
 
-        header {
-            background: #111;
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
+<title>Batman11 Shoes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        nav a {
-            color: #00bfff;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+<style>
 
-        section {
-            padding: 40px 20px;
-            text-align: center;
-        }
+body{
+font-family: Arial;
+margin:0;
+background:#f5f5f5;
+}
 
-        .products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+header{
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
+}
 
-        .card {
-            background: white;
-            width: 300px;
-            margin: 15px;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+nav a{
+color:#00bfff;
+margin:0 10px;
+text-decoration:none;
+font-weight:bold;
+}
 
-        .card img {
-            width: 100%;
-            border-radius: 10px;
-        }
+.cart{
+position:absolute;
+top:20px;
+right:20px;
+background:#00bfff;
+padding:8px 15px;
+border-radius:10px;
+}
 
-        button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            border: none;
-            background: #00bfff;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+.search-bar{
+margin-top:15px;
+}
 
-        button:hover {
-            background: #009acd;
-        }
+.search-bar input{
+padding:10px;
+width:200px;
+border-radius:8px;
+border:none;
+}
 
-        footer {
-            background: #111;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+section{
+padding:40px 20px;
+text-align:center;
+}
 
-        @media(max-width: 768px) {
-            .products {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+.products{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.card{
+background:white;
+width:280px;
+padding:15px;
+border-radius:12px;
+box-shadow:0 5px 12px rgba(0,0,0,0.15);
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+}
+
+.price{
+font-size:20px;
+color:#e63946;
+font-weight:bold;
+}
+
+button{
+background:#111;
+border:none;
+padding:10px 15px;
+color:white;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#333;
+}
+
+.badge{
+color:red;
+font-weight:bold;
+}
+
+footer{
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+/* Mobile design */
+
+@media (max-width:600px){
+
+.products{
+flex-direction:column;
+align-items:center;
+}
+
+.search-bar input{
+width:90%;
+}
+
+}
+
+</style>
+
+<script>
+
+let cartItems = [];
+
+function addToCart(name,price){
+
+cartItems.push({name:name,price:price});
+
+document.getElementById("cartCount").innerText = cartItems.length;
+
+alert(name + " added to cart");
+
+}
+
+function viewCart(){
+
+let cartPage = document.getElementById("cartPage");
+let list = document.getElementById("cartItems");
+
+list.innerHTML="";
+
+let total=0;
+
+cartItems.forEach(item=>{
+let li=document.createElement("li");
+li.innerText=item.name + " - ₹" + item.price;
+list.appendChild(li);
+total+=item.price;
+});
+
+document.getElementById("totalPrice").innerText="Total: ₹"+total;
+
+cartPage.scrollIntoView({behavior:"smooth"});
+
+}
+
+function searchProducts(){
+
+let input=document.getElementById("searchInput").value.toLowerCase();
+let cards=document.getElementsByClassName("card");
+
+for(let i=0;i<cards.length;i++){
+
+let title=cards[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+
+if(title.includes(input)){
+cards[i].style.display="block";
+}else{
+cards[i].style.display="none";
+}
+
+}
+
+}
+
+</script>
+
 </head>
+
 <body>
 
 <header>
-    <h1>Batman11 Shoes</h1>
-    <p>Step Boldly. Walk Stylishly.</p>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#products">Products</a>
-        <a href="#contact">Contact</a>
-    </nav>
+
+<h1>🦇 Batman11 Shoes</h1>
+<p>Step Boldly. Walk Stylishly.</p>
+
+<div class="cart">
+Cart: <span id="cartCount">0</span>
+<button onclick="viewCart()">View</button>
+</div>
+
+<div class="search-bar">
+<input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search sneakers...">
+</div>
+
+<nav>
+<a href="#products">Products</a>
+<a href="#reviews">Reviews</a>
+<a href="#contact">Contact</a>
+</nav>
+
 </header>
 
-<section id="about">
-    <h2>About Us</h2>
-    <p>
-        Welcome to Batman11 Shoes. We provide stylish and comfortable sneakers
-        designed for everyday confidence. Our goal is simple —
-        premium look, strong quality, and affordable price.
-    </p>
+<section id="products">
+
+<h2>Our Sneaker Collection</h2>
+
+<div class="products">
+
+<div class="card">
+<p class="badge">🔥 New Arrival</p>
+<img src="images/sneaker1.jpg">
+<h3>Street Sneaker</h3>
+<p>⭐⭐⭐⭐⭐</p>
+<p class="price">₹25000</p>
+<button onclick="addToCart('Street Sneaker',25000)">Add to Cart</button>
+</div>
+
+<div class="card">
+<p class="badge">🔥 New Arrival</p>
+<img src="images/sneaker2.jpg">
+<h3>Sport Runner</h3>
+<p>⭐⭐⭐⭐</p>
+<p class="price">₹27000</p>
+<button onclick="addToCart('Sport Runner',27000)">Add to Cart</button>
+</div>
+
+<div class="card">
+<p class="badge">🔥 New Arrival</p>
+<img src="images/sneaker3.jpg">
+<h3>Classic Sneaker</h3>
+<p>⭐⭐⭐⭐⭐</p>
+<p class="price">₹29000</p>
+<button onclick="addToCart('Classic Sneaker',29000)">Add to Cart</button>
+</div>
+
+</div>
+
 </section>
 
-<section id="products">
-    <h2>Our Sneakers Collection</h2>
+<section id="cartPage">
 
-    <div class="products">
+<h2>Your Cart</h2>
 
-        <div class="card">
-            <img src="images/InShot_20260303_141714473.jpg" alt="Sneaker 1">
-            <h3>Street Style Sneaker</h3>
-            <p>Comfortable and stylish everyday sneaker.</p>
-            <button onclick="alert('Contact us to order this sneaker!')">Buy Now</button>
-        </div>
+<ul id="cartItems"></ul>
 
-        <div class="card">
-            <img src="images/InShot_20260303_141855260.jpg" alt="Sneaker 2">
-            <h3>Sport Runner Sneaker</h3>
-            <p>Perfect for sports and daily wear.</p>
-            <button onclick="alert('Contact us to order this sneaker!')">Buy Now</button>
-        </div>
+<h3 id="totalPrice">Total: ₹0</h3>
 
-        <div class="card">
-            <img src="images/InShot_20260303_142010881.jpg" alt="Sneaker 3">
-            <h3>Classic Casual Sneaker</h3>
-            <p>Simple design with premium comfort.</p>
-            <button onclick="alert('Contact us to order this sneaker!')">Buy Now</button>
-        </div>
+</section>
 
-    </div>
+<section id="reviews">
+
+<h2>Customer Reviews</h2>
+
+<p>⭐⭐⭐⭐⭐ "Amazing quality sneakers!"</p>
+<p>⭐⭐⭐⭐ "Very comfortable and stylish."</p>
+<p>⭐⭐⭐⭐⭐ "Best sneaker design I have seen."</p>
+
 </section>
 
 <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: your@email.com</p>
-    <p>Phone: +91 9876543210</p>
+
+<h2>Contact</h2>
+
+<p>Email: chavdaudayrajsinh11@gmail.com</p>
+
 </section>
 
 <footer>
-    <p>© 2026 Batman11 Shoes | Built by Udayrajsingh</p>
+
+<p>© 2026 Batman11 Shoes | Created by Udayrajsingh</p>
+
 </footer>
 
 </body>
